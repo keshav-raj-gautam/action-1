@@ -1,0 +1,17 @@
+name: First workflow
+on: push
+jobs:
+    first_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Welcome message
+              run: echo "CI pipeline"
+
+            - name: Checkout
+              run: git clone "https://github.com/keshav-raj-gautam/action-1.git"
+
+            - name: List files
+              run: ls
+              
+            - name: Read file
+              run: cat ./action-1/README.md
