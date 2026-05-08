@@ -10,8 +10,10 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v6
 
-            - name: List files
-              run: ls && pwd
+            - name: List files and read
+              run: | 
+                ls && pwd
+                cat README.md
               
-            - name: Read file
-              run: cat README.md
+            # - name: Read file
+            #   run: cat README.md
