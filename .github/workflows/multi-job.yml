@@ -1,0 +1,27 @@
+name: Multi job workflow
+on: push
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Cowsay
+              run: sudo apt install cowsay  -y
+
+            - name: Run command
+              run: cowsay -f dragon "RUNNNNNNNNNNNNNNNN" >> dragon.txt
+
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Sleep for 10 sec
+              run: sleep 10
+              
+            - name: Test file exists
+              run: ls -a | grep "dragon.txt"
+              
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Read file
+              run: cat dragon.txt        
+                
