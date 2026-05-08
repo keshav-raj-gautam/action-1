@@ -11,6 +11,7 @@ jobs:
               run: cowsay -f dragon "RUNNNNNNNNNNNNNNNN" >> dragon.txt
 
     test:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Sleep for 10 sec
@@ -20,6 +21,7 @@ jobs:
               run: ls -a | grep "dragon.txt"
               
     deploy:
+        needs: test
         runs-on: ubuntu-latest
         steps:
             - name: Read file
