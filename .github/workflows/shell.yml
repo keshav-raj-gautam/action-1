@@ -1,0 +1,12 @@
+name: Shell workflow
+on: push
+jobs:
+    first_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+
+            - name: Execute shell script
+              run: ./ascii.sh
+
