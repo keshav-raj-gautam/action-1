@@ -7,6 +7,9 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v6
 
+            - name: Shell permission
+              run: chmod 777 ascii.sh
+
             - name: Execute shell script
               run: ./ascii.sh
 
