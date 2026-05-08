@@ -11,7 +11,7 @@ jobs:
               uses: actions/checkout@v6
 
             - name: List files
-              run: ls
+              run: ls && pwd
               
             - name: Read file
-              run: cat ./action-1/README.md
+              run: cat README.md
