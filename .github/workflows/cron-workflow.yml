@@ -1,0 +1,43 @@
+name: Multi job workflow
+on: 
+    schedule:
+        - cron: "*/1 * * * *"
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Cowsay
+              run: sudo apt install cowsay  -y
+
+            - name: Run command
+              run: cowsay -f dragon "RUNNNNNNNNNNNNNNNN" >> dragon.txt
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v7
+              with:
+                name: dragon.txt
+                path: dragon.txt
+    test:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download artifact
+              uses: actions/download-artifact@v8
+              with:
+                name: dragon.txt
+              
+            - name: Test file exists
+              run: ls -a | grep "dragon.txt"
+              
+    deploy:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download artifact
+              uses: actions/download-artifact@v8
+              with:
+                name: dragon.txt
+                
+            - name: Read file
+              run: cat dragon.txt        
+                
