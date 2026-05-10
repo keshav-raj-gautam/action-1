@@ -1,4 +1,4 @@
-name: Multi job workflow
+name: Cron workflow
 on: 
     schedule:
         - cron: "*/1 * * * *"
