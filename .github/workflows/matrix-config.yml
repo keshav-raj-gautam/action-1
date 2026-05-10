@@ -5,9 +5,19 @@ on:
 jobs:
     deploy:
       strategy:
-        matrix: # a matrix can be used to define variables that can be used multiple times in workflow, reducing the requirement to write multiple jobs
+        fail-fast: false                         # setting it to false prevents cancelling of jobs if any job fails
+        max-parallel: 1                          # maximun number of parallel jobs that can run at a time
+        matrix:                                  # a matrix can be used to define variables that can be used multiple 
+                                                 # times in workflow, reducing the requirement to write multiple jobs
           os: [ubuntu-latest, ubuntu-20.04, windows-latest]
           images: [hello-world, alpine]
+          exclude:                               # this can be used to exclude any job mentioned in matrix
+            - images: alpine
+              os: windows-latest
+
+          include:                               # this can be used to include any job not mentioned in matrix
+            - images: amd64/alpine
+              os: ubuntu-latest    
       runs-on: ${{ matrix.os }}
     
       steps:
