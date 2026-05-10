@@ -1,29 +1,29 @@
-name: Cron workflow
-on: 
-    workflow_dispatch: 
+name: Cron workflow #Name of the workflow
+on: # the trigger that will trigger the workflow
+    workflow_dispatch: #gives an option to manually trigger a workflow
     # schedule:
     #     - cron: "*/1 * * * *"
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest  # on which os we want to run the workflow
         steps:
             - name: Install Cowsay
-              run: sudo apt install cowsay  -y
+              run: sudo apt install cowsay  -y 
 
             - name: Run command
               run: cowsay -f dragon "RUNNNNNNNNNNNNNNNN" >> dragon.txt
 
             - name: Upload artifact
-              uses: actions/upload-artifact@v7
+              uses: actions/upload-artifact@v7 # action used for uploading artifact to next job
               with:
                 name: dragon.txt
                 path: dragon.txt
     test:
-        needs: build
+        needs: build  # created a dependency on a job. similar to depends-on
         runs-on: ubuntu-latest
         steps:
             - name: Download artifact
-              uses: actions/download-artifact@v8
+              uses: actions/download-artifact@v8 # action used for downloading artifact
               with:
                 name: dragon.txt
               
@@ -31,14 +31,15 @@ jobs:
               run: ls -a | grep "dragon.txt"
               
     deploy:
+        timeout-minutes: 1  # cancels the workflow if it takes more that 1 min ( saves github actions minutes)
         needs: test
-        concurrency:
+        concurrency:  # makes sure 2 similar workflows are not running at the same time
             group: production-deployment
-            cancel-in-progress: false
+            cancel-in-progress: false  # the first job runs and second job waits when set to "false"
         runs-on: ubuntu-latest
         steps:
             - name: Download artifact
-              uses: actions/download-artifact@v8
+              uses: actions/download-artifact@v8  # action used for downloading artifact
               with:
                 name: dragon.txt
                 
