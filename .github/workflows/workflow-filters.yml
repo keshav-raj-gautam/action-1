@@ -1,9 +1,9 @@
 name: Workflow filters
 on:
     push:
-        # branches:
-        #     - main
-        #     # - '!feature/*'
+        branches:
+            - main
+            - '!feature/*'
 
     pull_request: 
         types:
