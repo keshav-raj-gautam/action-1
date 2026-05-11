@@ -3,14 +3,14 @@ on:
     push:
         branches:
             - main
-            - '!feature/*'
+            - '!feature/*'      # ! ignores running a workflow in the specified branch
 
     pull_request: 
         types:
             - opened
             - closed
-        paths-ignore:
-            - README.md
+        paths-ignore:           # ignores running the workflow if the changes are made in the path specified
+            - README.md                     
         branches:
             -main
 
