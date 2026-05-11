@@ -1,0 +1,23 @@
+name: Workflow filters
+on:
+    push:
+        branches:
+            - main
+            - '!feature/*'
+
+    pull_request: 
+        types:
+            - opened
+            - closed
+        paths-ignore:
+            - README.md
+        branches:
+            -main
+
+jobs:
+    hello:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Run docker image
+              run: docker run hello-world            
+            
